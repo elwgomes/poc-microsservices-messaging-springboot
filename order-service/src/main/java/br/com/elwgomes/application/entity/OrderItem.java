@@ -14,6 +14,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "tb_order_item")
 @NoArgsConstructor
+@Getter
+@Setter
 public class OrderItem implements Serializable {
   private static final Long serialVersionUID = 1L;
 
@@ -33,34 +35,6 @@ public class OrderItem implements Serializable {
   @JsonIgnore
   public Double getSubTotal() {
     return price * quantity;
-  }
-
-  public static Long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public OrderItemPK getId() {
-    return id;
-  }
-
-  public void setId(OrderItemPK id) {
-    this.id = id;
-  }
-
-  public Integer getQuantity() {
-    return quantity;
-  }
-
-  public void setQuantity(Integer quantity) {
-    this.quantity = quantity;
-  }
-
-  public Double getPrice() {
-    return price;
-  }
-
-  public void setPrice(Double price) {
-    this.price = price;
   }
 
 }

@@ -31,18 +31,12 @@ public class InitConfig implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
 
-    Product product = Product
-        .builder()
-        .name("TV")
-        .price(1200.00)
-        .build();
+    Product product = new Product("TV", 1200.0);
 
     productRepository.save(product);
 
-    Order order = Order.builder()
-        .moment(Instant.now())
-        .orderStatus(OrderStatus.WAITING_PAYMENT)
-        .build();
+    Order order = new Order(Instant.now(), OrderStatus.WAITING_PAYMENT);
+
     OrderItem orderItem = new OrderItem(order, product, 1, product.getPrice());
 
     orderRepository.save(order);

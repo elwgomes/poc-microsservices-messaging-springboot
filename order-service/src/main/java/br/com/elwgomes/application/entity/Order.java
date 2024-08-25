@@ -17,13 +17,16 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tb_order")
-@Builder
 @AllArgsConstructor // only to @builder work
 @NoArgsConstructor
+@Getter
+@Setter
 public class Order implements Serializable {
   private static final Long serialVersionUID = 1L;
 
@@ -33,13 +36,13 @@ public class Order implements Serializable {
   private Instant moment;
   private OrderStatus orderStatus;
 
-  @OneToMany(mappedBy = "id.order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private Set<OrderItem> items = new HashSet<>();
-
   public Order(Instant moment, OrderStatus orderStatus) {
     this.moment = moment;
     this.orderStatus = orderStatus;
   }
+
+  @OneToMany(mappedBy = "id.order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private Set<OrderItem> items = new HashSet<>();
 
   public Double getTotal() {
     double sum = 0;
@@ -48,25 +51,4 @@ public class Order implements Serializable {
     }
     return sum;
   }
-
-  public static Long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public Instant getMoment() {
-    return moment;
-  }
-
-  public OrderStatus getOrderStatus() {
-    return orderStatus;
-  }
-
-  public Set<OrderItem> getItems() {
-    return items;
-  }
-
 }

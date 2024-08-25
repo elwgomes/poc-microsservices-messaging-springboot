@@ -8,8 +8,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 @Embeddable
+@Setter
+@Getter
 public class OrderItemPK implements Serializable {
   private static final Long serialVersionUID = 1L;
 
@@ -21,31 +25,5 @@ public class OrderItemPK implements Serializable {
   @ManyToOne
   @JoinColumn(name = "product_id")
   private Product product;
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (o == null || getClass() != o.getClass())
-      return false;
-    OrderItemPK that = (OrderItemPK) o;
-    return Objects.equals(order, that.order) && Objects.equals(product, that.product);
-  }
-
-  public Order getOrder() {
-    return order;
-  }
-
-  public void setOrder(Order order) {
-    this.order = order;
-  }
-
-  public Product getProduct() {
-    return product;
-  }
-
-  public void setProduct(Product product) {
-    this.product = product;
-  }
 
 }
