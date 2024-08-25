@@ -1,12 +1,14 @@
 package br.com.elwgomes.application.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.elwgomes.application.entity.Product;
+import br.com.elwgomes.application.entity.dto.ProductDTO;
 import br.com.elwgomes.application.mapper.ProductMapper;
 import br.com.elwgomes.application.repository.ProductRepository;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +25,13 @@ public class ProductController {
   }
 
   @PostMapping
-  public ResponseEntity<?> saveProduct(@RequestBody Product product) {
-    productRepository.save(product);
-    return ResponseEntity.status(HttpStatus.CREATED).body(ProductMapper.INSTANCE.toDto(product));
+  public ResponseEntity<ProductDTO> saveProduct(@RequestBody ProductDTO productDto) {
+    productRepository.save(ProductMapper.INSTANCE.toEntity(productDto));
+    return ResponseEntity.status(HttpStatus.CREATED).body(productDto);
   }
 
   @GetMapping
-  public ResponseEntity<?> getProducts() {
+  public ResponseEntity<List<ProductDTO>> getProducts() {
     return ResponseEntity.status(HttpStatus.OK).body(ProductMapper.INSTANCE.toListDto(productRepository.findAll()));
   }
 
