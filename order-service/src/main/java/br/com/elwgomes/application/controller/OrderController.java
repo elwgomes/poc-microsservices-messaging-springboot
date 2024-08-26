@@ -2,10 +2,15 @@ package br.com.elwgomes.application.controller;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +36,18 @@ public class OrderController {
 
   final ProductRepository productRepository;
 
+  final KafkaTemplate<String, Optional<Order>> kafkaTemplate;
+
   public OrderController(OrderRepository orderRepository, OrderItemRepository orderItemRepository,
-      ProductRepository productRepository) {
+      ProductRepository productRepository, KafkaTemplate<String, Optional<Order>> kafkaTemplate) {
     this.orderRepository = orderRepository;
     this.orderItemRepository = orderItemRepository;
     this.productRepository = productRepository;
+    this.kafkaTemplate = kafkaTemplate;
   }
+
+  @Value("${topics.order.request.topic}")
+  private String orderTopic;
 
   @PostMapping
   public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDto) throws RuntimeException {
@@ -54,6 +65,8 @@ public class OrderController {
       orderRepository.save(order);
     });
 
+    kafkaTemplate.send(orderTopic, orderRepository.findById(order.getId()));
+
     return ResponseEntity.status(HttpStatus.CREATED).body(orderDto);
   }
 
@@ -62,4 +75,8 @@ public class OrderController {
     return ResponseEntity.status(HttpStatus.OK).body(orderRepository.findAll());
   }
 
+  @GetMapping("{id}")
+  public ResponseEntity<Optional<Order>> getOrderById(@PathVariable UUID id) {
+    return ResponseEntity.status(HttpStatus.OK).body(orderRepository.findById(id));
+  }
 }

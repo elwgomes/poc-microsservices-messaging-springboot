@@ -2,6 +2,7 @@ package br.com.elwgomes.application.kafka.config;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -11,9 +12,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+
+import br.com.elwgomes.application.entity.Order;
 
 @Configuration
-public class KafkaProduceConfig {
+public class KafkaProducerConfig {
 
   @Value("${spring.kafka.bootstrap-servers}")
   private String bootstraServers;
@@ -22,17 +26,17 @@ public class KafkaProduceConfig {
     HashMap<String, Object> props = new HashMap<>();
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstraServers);
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
     return props;
   }
 
   @Bean
-  ProducerFactory<String, String> producerFactory() {
+  ProducerFactory<String, Optional<Order>> producerFactory() {
     return new DefaultKafkaProducerFactory<>(producerConfig());
   }
 
   @Bean
-  KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
+  KafkaTemplate<String, Optional<Order>> kafkaTemplate(ProducerFactory<String, Optional<Order>> producerFactory) {
     return new KafkaTemplate<>(producerFactory);
   }
 

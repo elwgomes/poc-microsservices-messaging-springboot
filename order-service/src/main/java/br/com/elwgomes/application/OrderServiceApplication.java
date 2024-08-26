@@ -12,11 +12,12 @@ public class OrderServiceApplication {
     SpringApplication.run(OrderServiceApplication.class, args);
   }
 
-  @Bean
-  CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
-    return args -> {
-      kafkaTemplate.send("order.request.topic.v1", "hello world.");
-    };
-  }
+  // @Bean
+  // CommandLineRunner commandLineRunner(KafkaTemplate<String, String>
+  // kafkaTemplate) {
+  // return args -> {
+  // kafkaTemplate.send("order.request.topic.v1", "hello world.");
+  // };
+  // }
 
 }

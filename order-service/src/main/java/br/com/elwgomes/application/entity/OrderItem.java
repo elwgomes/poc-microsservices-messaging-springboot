@@ -2,14 +2,13 @@ package br.com.elwgomes.application.entity;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "tb_order_item")
@@ -32,9 +31,7 @@ public class OrderItem implements Serializable {
     this.price = price;
   }
 
-  @JsonIgnore
   public Double getSubTotal() {
     return price * quantity;
   }
-
 }

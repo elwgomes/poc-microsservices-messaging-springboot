@@ -54,6 +54,11 @@
     </dependency>
 
 
+<dependency>
+    <groupId>com.fasterxml.jackson.datatype</groupId>
+    <artifactId>jackson-datatype-jsr310</artifactId>
+    <version>2.15.2</version> <!-- Use a versão que seja compatível com a sua versão do Jackson -->
+</dependency>
 
     <dependency>
       <groupId>org.postgresql</groupId>
