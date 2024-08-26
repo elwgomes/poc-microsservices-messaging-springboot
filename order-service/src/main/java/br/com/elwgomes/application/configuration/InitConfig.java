@@ -1,22 +1,14 @@
 package br.com.elwgomes.application.configuration;
 
-import java.time.Instant;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.elwgomes.application.entity.Order;
-import br.com.elwgomes.application.entity.OrderItem;
-import br.com.elwgomes.application.entity.Product;
-import br.com.elwgomes.application.entity.enums.OrderStatus;
-import br.com.elwgomes.application.mapper.OrderMapper;
 import br.com.elwgomes.application.repository.OrderItemRepository;
 import br.com.elwgomes.application.repository.OrderRepository;
 import br.com.elwgomes.application.repository.ProductRepository;

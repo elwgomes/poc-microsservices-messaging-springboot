@@ -5,16 +5,11 @@ import java.io.Serializable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 @Entity
 @Table(name = "tb_order_item")
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class OrderItem implements Serializable {
   private static final Long serialVersionUID = 1L;
 
